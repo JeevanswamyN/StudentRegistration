@@ -33,28 +33,22 @@ public class StudentController {
 		   private MailSender mailSender;
 
 	    @RequestMapping(value = "/studentController", method = RequestMethod.POST)
-	   // public String addContact(@ModelAttribute("student")Object command,Student s, BindingResult result) throws IOException {
 	    public String addContact(@ModelAttribute("student")	Student s)
 	    {
-	    	//Student s=(Student)command;
-	    	logger.debug(s);
-	    /*	//MultipartFile file=s.getFile();
-	    	if(file==null)
-	    	{
-	    		System.out.println("unable to upload the image");
-	    	}
 	    	
-				byte imageArray[] = file.getBytes();
-			*/
+	    	logger.debug(s);
+	   
 	    	studentService.createstudent(s);
 	        System.out.println(s);
 	        SimpleMailMessage message = new SimpleMailMessage();
 	        String password=StringUtils.generateRandomPassword();
+	    	
 			message.setFrom("poojashreem057@gmail.com");
 			message.setTo(s.getEmail());
 			message.setSubject("Student Registration Form");
 			message.setText("Hi Your suceesfully registered your password:"+password);
- 
+		
+
 			mailSender.send(message);	
 			System.out.println("Mail Sent Successfully...!");
 	        return "redirect:studentRegister.html";

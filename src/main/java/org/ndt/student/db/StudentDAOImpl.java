@@ -8,13 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.ndt.student.entity.Student;
+import org.ndt.student.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
 
-	//private int row=0;
+
 	
 	@Autowired
 	private DBManager dBManager;
@@ -22,7 +23,7 @@ public class StudentDAOImpl implements StudentDAO {
 	@Override
 	public boolean createstudent(Student s) {
 		int row=0;
-		String sql="insert into srs(firstname,lastname,middlename,dob,phoneno,email,qualification,parentname,gender,image) values(?,?,?,?,?,?,?,?,?,?)";
+		String sql="insert into srs(firstname,lastname,middlename,dob,phoneno,email,qualification,parentname,gender,image,password) values(?,?,?,?,?,?,?,?,?,?,?)";
 		Connection conn=dBManager.getConnection();
 		FileInputStream fis=null;
 		try {
@@ -38,7 +39,12 @@ public class StudentDAOImpl implements StudentDAO {
 			ps.setString(8, s.getPname());
 			ps.setString(9, s.getGender());
 			ps.setBinaryStream(10,(InputStream) fis,s.getFile().length());
+			
+			ps.setString( 11, StringUtils.generateRandomPassword());
 			row=ps.executeUpdate();		
+			
+			conn.close();
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			

@@ -101,6 +101,21 @@ public class Student {
 	
 	public Student(String fname, String lname, String mname, String dob,
 			String phno, String email, String qualification, String pname,
+			String gender) {
+		super();
+		this.fname = fname;
+		this.lname = lname;
+		this.mname = mname;
+		this.dob = dob;
+		this.phno = phno;
+		this.email = email;
+		this.qualification = qualification;
+		this.pname = pname;
+		this.gender = gender;
+	}
+
+	public Student(String fname, String lname, String mname, String dob,
+			String phno, String email, String qualification, String pname,
 			String gender, File file) {
 		super();
 		this.fname = fname;
